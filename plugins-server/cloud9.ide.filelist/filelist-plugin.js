@@ -72,8 +72,14 @@ module.exports = function setup(options, imports, register) {
                         if (!msg)
                             return;
 
-                        if (!res.headerSent)
-                            res.writeHead(200, { "content-type": "text/plain" });
+                        if (!res.headerSent) {
+                            try {
+                               res.writeHead(200, { "content-type": "text/plain" });
+                            }
+                            catch(e) {
+                               console.log('WARNING: Can\'t render headers after they are sent to the client.');
+                            }
+                        }
                         res.write(msg);
                     },
                     // process exit

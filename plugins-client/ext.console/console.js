@@ -71,7 +71,12 @@ module.exports = ext.register("ext/console/console", {
         },
 
         error: function(message, outputElDetails) {
-            logger.logNodeStream(message.body.errmsg, null, outputElDetails, ide);
+            if(typeof message.body == "object") {
+                logger.logNodeStream(message.body.errmsg, null, outputElDetails, ide);
+            }
+            else {
+                logger.logNodeStream(message.body, null, outputElDetails, ide);
+            }
         },
 
         info: function (message, outputElDetails) {
